@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
+module.exports = function(app) {
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+    //首页
+    app.get('/', session.out, function(req, res, next) {
+        //res.json({ message: 'hello index!'});
+        res.render('index');
+    });
 
-module.exports = router;
+
+    //【登录注册】路由分发
+    var loginRegist = require('./loginRegist');
+    app.use('/loginRegist', loginRegist);
+
+}
