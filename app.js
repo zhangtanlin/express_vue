@@ -6,9 +6,6 @@ var cookieParser = require('cookie-parser'); //如果要使用cookie，需要显
 var MongoStore = require('connect-mongo')(session);
 var logger = require('morgan');
 
-//跨域设置
-var cors = require('cors');
-
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -33,15 +30,12 @@ app.use(session({
     })
 }));
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'public'));
 
 //设置视图引擎
 app.engine('.html', require('ejs').renderFile);
 app.set('view engine', 'html');
-
-// app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -51,31 +45,23 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//设置允许跨域方法一
-//app.use(cors({
-//    origin:['http://localhost:8080'],
-//    methods:['GET','POST'],
-//    alloweHeaders:['Content-Type', 'Authorization']
-//}));
-//设置允许跨域方法二
+//设置允许跨域方法
 app.all('*', function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');　
-    next();　
+    res.header('Access-Control-Allow-Credentials', true)
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
+    res.header('X-Powered-By', ' 3.2.1')
+    res.header('Content-Type', 'application/json;charset=utf-8')
+    next()
 });
 
 //分发路由文件
-var routes = require("./routes");
-routes(app);
+app.use('/', require('./routes/index'));
 
 //导入api接口
 app.use('/api/acl_resource', require('./api/routes/acl_resource'));
 app.use('/api/acl_role', require('./api/routes/acl_role'));
 app.use('/api/acl_user', require('./api/routes/acl_user'));
-
-
-
-
 
 module.exports = app;

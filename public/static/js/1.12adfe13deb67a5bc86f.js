@@ -1,2 +1,2 @@
 webpackJsonp([1],{S6Bx:function(e,t,s){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"welcome"},[t("h1",[this._v(this._s(this.msg))])])},staticRenderFns:[]},l=s("VU/8")({name:"Welcome",data:function(){return{msg:"欢迎界面"}}},n,!1,null,null,null);t.default=l.exports}});
-//# sourceMappingURL=1.9b0cdaa9f8b8527aa95f.js.map
+//# sourceMappingURL=1.12adfe13deb67a5bc86f.js.map

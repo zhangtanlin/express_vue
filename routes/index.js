@@ -1,8 +1,8 @@
-module.exports = function(app) {
+var express = require('express');
+var router = express.Router();
 
-    //入口
-    app.get('/', function(req, res, next) {
-        res.render('index');
-    });
+router.get("/",function(req,res){
+  res.render('index');
+});
 
-}
+module.exports = router;
