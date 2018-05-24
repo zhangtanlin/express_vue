@@ -57,9 +57,6 @@ import {
     Message
 } from 'iview';
 
-//解决axios post不能传递参数
-import qs from 'qs'
-
 export default {
     name: 'Login',
     data() {
@@ -118,27 +115,22 @@ export default {
             this.useW3c = !this.useW3c;
         },
         handleSubmit(name) {
+            //利用$axios向后台发送请求
+            let _self = this;
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     //利用qs解决后台获取不到post数据
-                    var obj = {
+                    var obj = this.$qs.stringify({
                         account: this.loginForm.user,
                         password: this.loginForm.passwd
-                    };
-
-                    //利用$axios向后台发送请求
-                    let _self = this;
-                    console.log(obj);
+                    });
                     this.$axios.post('/api/acl_user/login', obj).then(function(res) {
-                        debugger;
-
+                        console.log(res);
                         //存储sessionStorage【将对象转为json字符串存储】
                         sessionStorage.setItem('userInfo', _self.loginForm.user);
-
-                        console.log(res);
                         if (res.data.code == 200) {
                             _self.$router.push({
-                                path: '/'
+                                path: '/home'
                             })
                         } else {
                             _self.$Message.error('后台获取数据失败,请验证用户名和密码后重新输入');
