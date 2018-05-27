@@ -6,6 +6,10 @@ var cookieParser = require('cookie-parser'); //如果要使用cookie，需要显
 var MongoStore = require('connect-mongo')(session);
 var logger = require('morgan');
 
+//form提交表单，解析body的（必须）
+var bodyParser = require('body-parser');
+
+//路由文件导入
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -38,10 +42,18 @@ app.engine('.html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({
+
+//form提交表单，解析body的（必须）
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+// app.use(express.json());
+// app.use(express.urlencoded({
+//     extended: false
+// }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

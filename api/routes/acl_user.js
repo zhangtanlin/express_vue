@@ -8,6 +8,7 @@ var userController = require('../controllers/acl_user');
 var resourceController = require('../controllers/acl_resource');
 var util = require('../../config/public.js');
 
+//url
 router.post('/login', function(req, res) {
     try {
         var arg = req.body;
